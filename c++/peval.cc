@@ -144,7 +144,7 @@ uword program[] = {
   STORE_LOCAL, loopc,
   JMPNZ, 8,
 
-  PRINT, (uword)"Result: ",
+  PRINT, (uword)"(C++)Result: ",
   LOAD_LOCAL, result,
   PRINTI,
   PRINT, (uword)"\n",
