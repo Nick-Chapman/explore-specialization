@@ -1,0 +1,9 @@
+
+time.out: peval
+  bash -c 'time ./peval' | tee time.out
+
+peval: peval.o
+  g++ peval.o -o peval
+
+peval.o: peval.cc
+  g++ -c peval.cc -o peval.o
