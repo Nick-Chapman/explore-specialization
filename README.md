@@ -15,7 +15,7 @@ sys     0m0.003s
 
 First cut ocaml interpreter version:
 ```
-$ time dune exec ocaml/peval.exe
+$ time jenga run ocaml/peval.exe
 (Ocaml)Result: 5000000050000000
 
 real    0m2.304s

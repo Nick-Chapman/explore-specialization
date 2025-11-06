@@ -79,7 +79,6 @@ let execute : op list -> unit =
   loop program0
 
 let main() =
-  printf "\n";
   let () = execute program in
   ()
 
