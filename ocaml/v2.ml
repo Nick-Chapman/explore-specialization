@@ -7,43 +7,13 @@
    - some hand unrolling of myfix.
    - printing achieved via put_{char,string,int}
  *)
-let goal = 5
+
+let goal = 100_000_000
 
 let crash = failwith
 let noinline x = x
-let put_char = Printf.printf "%c"
 let put_int = Printf.printf "%d"
 let put_string = Printf.printf "%s"
-
-(*
-let explode = noinline (fun s ->
-  let rec explode_loop acc i =
-    if i < 0 then acc else
-      explode_loop (string_index s i :: acc) (i-1)
-  in
-  explode_loop [] (string_length s - 1))
-
-let rec put_chars xs =
-  match xs with
-  | [] -> ()
-  | x::xs -> put_char x; put_chars xs
-
-let put_string s = put_chars (explode s)
-
-let chars_of_int i =
-  let ord0 = ord '0' in
-  let char_of_digit c = chr (ord0 + c) in
-  let rec loop acc i =
-    if i = 0 then acc else
-      loop (char_of_digit (i%10) :: acc) (i/10)
-  in
-  if i = 0 then ['0'] else loop [] i
-
-let put_int = noinline (fun i ->
-  if i < 0
-  then put_chars ('-' :: chars_of_int (0 - i))
-  else put_chars (chars_of_int i))
- *)
 
 type value = VALUE of int
 let deVal v = match v with VALUE i -> i
@@ -123,7 +93,6 @@ let execute : op list -> unit =
   in
   let acc : value ref = ref zero in
   let loop = myfix (fun loop -> fun ops ->
-    let () = put_char '.' in
     match ops with
     | [] -> crash "run out of instructions"
     | op::ops ->
@@ -143,9 +112,4 @@ let execute : op list -> unit =
   in
   loop program0
 
-let main() =
-  let () = execute program in
-  ()
-
-
-let () = main ()
+let () = execute program

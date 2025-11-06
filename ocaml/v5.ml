@@ -2,11 +2,10 @@
    - avoid mutable state for accumulator
  *)
 
-let goal = 5 (*10_000_000*)
+let goal = 100_000_000
 
 let crash = failwith
 let noinline x = x
-let put_char = Printf.printf "%c"
 let put_int = Printf.printf "%d"
 let put_string = Printf.printf "%s"
 
@@ -86,9 +85,7 @@ let execute () =
   in
 
   let rec outer acc pc =
-    let () = put_char 'x' in
     let inner = unroll (fun inner acc pc ->
-      let () = put_char '.' in
       let loop acc pc' =
         let backedge = not (pc < pc') in
         let jump_dest = (pc' = 4) in (*the only jump dest*)
@@ -112,9 +109,4 @@ let execute () =
   in
   outer zero 0
 
-let main() =
-  let () = execute () in
-  ()
-
-
-let () = main ()
+let () = execute ()

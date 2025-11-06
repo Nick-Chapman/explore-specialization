@@ -11,7 +11,7 @@ let goal = 100_000_000
 
 let printf = Printf.printf
 
-type value = VALUE of int (* TODO: kill this wrapper *)
+type value = VALUE of int
 let vadd (VALUE i) (VALUE j) = VALUE (i+j)
 let vdec (VALUE i) = VALUE (i-1)
 let deVal (VALUE i) = i
@@ -27,7 +27,7 @@ type op =
   | JMPNZ of int
   | HALT
 
-let program : op list = (* TODO: move to use array of ops *)
+let program : op list =
   let (result,loopc) = (0,1) in
   [ LOAD_IMMEDIATE (VALUE 0)
   ; STORE_LOCAL result
@@ -48,7 +48,7 @@ let program : op list = (* TODO: move to use array of ops *)
   ; HALT
   ]
 
-let rec drop : int -> 'a list -> 'a list = (* TODO: kill when move to array ops *)
+let rec drop : int -> 'a list -> 'a list =
   fun i xs ->
   if i = 0 then xs else
   match xs with
@@ -58,7 +58,7 @@ let rec drop : int -> 'a list -> 'a list = (* TODO: kill when move to array ops 
 let execute : op list -> unit =
   fun program0 ->
   let
-    setPC : int -> op list = (* TODO: kill when move to array *)
+    setPC : int -> op list =
     fun i -> drop i program0
   in
   let zero = VALUE 0 in
@@ -86,8 +86,4 @@ let execute : op list -> unit =
   in
   loop program0
 
-let main() =
-  let () = execute program in
-  ()
-
-let () = main()
+let () = execute program

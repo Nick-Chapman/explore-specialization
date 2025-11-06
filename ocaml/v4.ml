@@ -2,11 +2,10 @@
    - split into outer/inner loops
  *)
 
-let goal = 5 (*10_000_000*)
+let goal = 100_000_000
 
 let crash = failwith
 let noinline x = x
-let put_char = Printf.printf "%c"
 let put_int = Printf.printf "%d"
 let put_string = Printf.printf "%s"
 
@@ -72,9 +71,7 @@ let execute () =
   in
 
   let rec outer pc =
-    let () = put_char 'x' in
     let rec inner pc =
-      let () = put_char '.' in
       let loop pc' =
         let backedge = (pc' <= pc) in
         (if backedge then outer else inner) pc'
@@ -97,9 +94,4 @@ let execute () =
   in
   outer 0
 
-let main() =
-  let () = execute () in
-  ()
-
-
-let () = main ()
+let () = execute ()

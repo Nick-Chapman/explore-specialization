@@ -3,11 +3,10 @@
    - main loop now recurses on `pc : int` instead of `op list`
  *)
 
-let goal = 5 (*10_000_000*)
+let goal = 100_000_000
 
 let crash = failwith
 let noinline x = x
-let put_char = Printf.printf "%c"
 let put_int = Printf.printf "%d"
 let put_string = Printf.printf "%s"
 
@@ -66,7 +65,6 @@ let execute () =
   in
   let acc : value ref = ref zero in
   let rec loop pc =
-    let () = put_char '.' in
     match op_at_pc pc with
     | LOAD_IMMEDIATE v -> acc := v; loop (pc+1)
     | STORE_LOCAL i -> local_at_put i !acc; loop (pc+1)
@@ -83,9 +81,4 @@ let execute () =
   in
   loop 0
 
-let main() =
-  let () = execute () in
-  ()
-
-
-let () = main ()
+let () = execute ()
