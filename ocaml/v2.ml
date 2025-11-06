@@ -1,4 +1,12 @@
-
+(* v2: based on ./peval.ml made to work in barefun
+   - still has list of structured opcodes
+   - value still a lifted types
+   - accumulator still a ref value
+   - locals: now a pair of ref values (only 2 locals supported!)
+   - main loop: recursive knot tied with user-defined "myfix"
+   - some hand unrolling of myfix.
+   - printing achieved via put_{char,string,int}
+ *)
 let goal = 5
 
 let crash = failwith

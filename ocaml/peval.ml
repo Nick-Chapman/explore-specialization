@@ -1,3 +1,11 @@
+(* v1: first version; based on ../c++/peval.cc
+   - uses lists of op codes (instead of arrays)
+   - ops are structured to include their args
+        (instead of args following opcodes in the array)
+   - value is a lifted type, so it is different from a plain int
+   - accumulator is a ref value
+   - locals are a mutable array of values
+ *)
 
 let goal = 100_000_000
 

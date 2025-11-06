@@ -1,3 +1,7 @@
+(* v3: based on ./v2.ml
+   - program represented via: `op_at_pc : int -> op`
+   - main loop now recurses on `pc : int` instead of `op list`
+ *)
 
 let goal = 5 (*10_000_000*)
 
