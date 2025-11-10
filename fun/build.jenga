@@ -11,7 +11,6 @@ norm.ml : barefun.exe peval.fun
 
 names:
   echo patched >> names
-  echo hand >> names
 
 include ../ocaml/ocaml.rules
 

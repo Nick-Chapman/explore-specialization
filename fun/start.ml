@@ -7,10 +7,6 @@ let put_char : char -> unit = fun c ->
     let bs = (n == 8) in
     if printable || nl || bs then printf "%c%!" c else printf "\\%02x%!" n
 
-let fix : ('a -> 'a) -> 'a = fun f ->
-  let rec fixed x = f fixed x
-  in fixed
-
 type 'a myList = Nil | Cons of 'a * 'a myList
 type myUnit = Unit
 
