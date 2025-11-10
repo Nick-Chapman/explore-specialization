@@ -2,15 +2,19 @@
 barefun.exe : ../../barefun/haskell/src/barefun
   ln barefun barefun.exe
 
-patched.ml : start.ml norm.ml end.ml
-  cat start.ml norm.ml end.ml > patched.ml
+norm.fun : barefun.exe orig.fun
+  ./barefun.exe orig.fun -compile -2 > norm.fun
 
-norm.ml : barefun.exe peval.fun
-  #./barefun.exe peval.fun -compile -2 -mlam 1 -mapp 1 > norm.ml
-  ./barefun.exe peval.fun -compile -2 > norm.ml
+
+orig.ml : prim.ml start1.ml orig.fun end1.ml
+  cat prim.ml start1.ml orig.fun end1.ml > orig.ml
+
+norm.ml : prim.ml start2.ml norm.fun end2.ml
+  cat prim.ml start2.ml norm.fun end2.ml > norm.ml
 
 names:
-  echo patched >> names
+  echo orig >> names
+  echo norm >> names
 
 include ../ocaml/ocaml.rules
 

@@ -22,8 +22,3 @@ let prim_CharOrd c = Char.code c
 let prim_CharChr n = Char.chr (n mod 256)
 let prim_Crash = failwith
 let prim_PutChar c = put_char c
-
-type value = VALUE of int
-type locals = Locals of (value*value)
-
-let main () =
