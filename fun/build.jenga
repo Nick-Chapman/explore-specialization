@@ -1,10 +1,6 @@
 
-barefun.exe : ../../barefun/haskell/src/barefun
-  ln barefun barefun.exe
-
-norm.fun : barefun.exe orig.fun
-  ./barefun.exe orig.fun -compile -2 > norm.fun
-
+norm.fun : orig.fun
+  barefun.exe orig.fun -compile -2 > norm.fun
 
 orig.ml : prim.ml start1.ml orig.fun end1.ml
   cat prim.ml start1.ml orig.fun end1.ml > orig.ml
