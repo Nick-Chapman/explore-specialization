@@ -1,4 +1,5 @@
 
+let is_comptime_known _ = true
 let noinline x = x
 let string_index s i = prim_StringIndex (s,i)
 let string_length s = prim_StringLength s

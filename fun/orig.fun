@@ -107,6 +107,7 @@ let main () =
     let [@unroll] rec inner pc acc locals =
       (*let () = put_char '.' in*)
       let loop pc' =
+       if not (is_comptime_known pc') then outer pc' else
         let backedge = not (pc < pc') in
         let jump_dest = (pc' = 4) in (*the only jump dest*)
         (if backedge || jump_dest then outer else inner) pc'
