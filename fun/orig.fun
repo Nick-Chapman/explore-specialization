@@ -81,20 +81,6 @@ let op_at_pc : int -> op = fun pc ->
   if pc = 14 then HALT else
   crash "pc to big"
 
-(* Just enough steps of unrolling... *)
-let unroll _f _x = crash "unroll"
-let unroll f x = f (unroll f) x
-let unroll f x = f (unroll f) x
-let unroll f x = f (unroll f) x
-let unroll f x = f (unroll f) x
-let unroll f x = f (unroll f) x
-let unroll f x = f (unroll f) x
-let unroll f x = f (unroll f) x
-let unroll f x = f (unroll f) x
-let unroll f x = f (unroll f) x
-let unroll f x = f (unroll f) x
-let unroll f x = f (unroll f) x
-
 type locals = Locals of (value*value)
 
 let local_at_put : locals -> int -> value -> locals = fun locals i v ->
@@ -118,7 +104,7 @@ let with_starting pc k =
 let main () =
   let rec outer pc acc locals =
     (*let () = put_char 'x' in*)
-    let inner = unroll (fun inner pc acc locals ->
+    let [@unroll] rec inner pc acc locals =
       (*let () = put_char '.' in*)
       let loop pc' =
         let backedge = not (pc < pc') in
@@ -137,7 +123,7 @@ let main () =
          if deVal acc = 0
          then loop (pc+1) acc locals
          else loop address acc locals
-      | HALT -> ())
+      | HALT -> ()
     in
     with_starting pc (fun pc -> inner pc acc locals)
   in
