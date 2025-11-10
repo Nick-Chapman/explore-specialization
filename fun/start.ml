@@ -14,10 +14,10 @@ let fix : ('a -> 'a) -> 'a = fun f ->
 type 'a myList = Nil | Cons of 'a * 'a myList
 type myUnit = Unit
 
-let prim_LessInt(a,b) = a < b
+let prim_LessInt(a,b) = ((a:int) < b)
 let prim_AddInt(a,b) = a + b
 let prim_SubInt(a,b) = a - b
-let prim_EqInt(a,b) = a = b
+let prim_EqInt(a,b) = ((a:int) = b)
 let prim_DivInt(a,b) = a / b
 let prim_ModInt(a,b) = a mod b
 let prim_StringIndex (s,i) = s.[i]
@@ -27,20 +27,7 @@ let prim_CharChr n = Char.chr (n mod 256)
 let prim_Crash = failwith
 let prim_PutChar c = put_char c
 
-
 type value = VALUE of int
-(*type value = int*)
 type locals = Locals of (value*value)
-
-type op
-  = LOAD_IMMEDIATE of value
-  | STORE_LOCAL of int
-  | LOAD_LOCAL of int
-  | ADD of int * int
-  | DEC
-  | PRINT of string
-  | PRINTI
-  | JMPNZ of int
-  | HALT
 
 let main () =
