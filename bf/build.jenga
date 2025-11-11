@@ -3,6 +3,7 @@ number:
   echo 123 > number
 
 test: number orig_example1.exe norm_example1.exe
+  touch test
   cat number | ./orig_example1.exe | tee test
   cat number | ./norm_example1.exe | tee test
 
@@ -10,11 +11,12 @@ names:
   echo orig_example1 >> names
   echo norm_example1 >> names
 
-example1.bf :
-  #cat ~/code/bf/b/fac.b > example1.bf
+example1.bf : fac.b
+  #echo '[-]>,[>,]<[+.<]' > example1.bf
+  #cat ~/code/bf/b/rev.b > example1.bf
   #cat ~/code/bf/b/mes.b > example1.bf
-  #echo ',[-].' > example1.bf
-  echo '>,[>,]<[+.<]' > example1.bf
+  #cat ~/code/bf/b/collatz.b > example1.bf
+  cat fac.b > example1.bf
 
 orig_example1.ml : prim.ml example1.bf interpreter.fun
   echo 'let the_mode = "ORIGINAL"' >> orig_example1.ml

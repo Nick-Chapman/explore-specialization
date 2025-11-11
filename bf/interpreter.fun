@@ -71,8 +71,8 @@ let _debug_put_char c =
   let () = put_int n in
   put_string ".\n"
 
-let output_char = noinline _debug_put_char
-let _output_char = noinline put_char
+let _output_char = noinline _debug_put_char
+let output_char = noinline put_char
 
 let _increment : char -> char = noinline (fun c -> chr ((ord c + 1) % 256))
 let _decrement : char -> char = noinline (fun c -> chr ((ord c + 255) % 256))
@@ -89,10 +89,6 @@ let _debug_step = noinline (fun _pc _step _mp _c ->
     put_char '\n'
   in ())
 
-let prog = the_prog
-
-
-
 let need_case pc =
   let () = put_string "\n** cases: need case for:" in
   let () = put_int pc in
@@ -106,21 +102,26 @@ let cases xs pc k =
   in
   loop xs
 
-let zero_upto n =
-  let [@unroll] rec loop acc n =
-    if n < 0 then acc else loop (n::acc) (n-1)
+let string_of_int_list =
+  let rec _loop xs = match xs with
+    | [] -> "]"
+    | x::xs -> "," ^ sofi x ^ _loop xs
   in
-  loop [] n
+  fun xs ->
+  match xs with
+  | [] -> "[]"
+  | x::xs -> "[" ^ sofi x ^ _loop xs
 
+let print_int_list tag xs = put_string (tag ^ string_of_int_list xs ^ "\n")
 
 let execute () =
 
-  let max = string_length prog in
+  let prog_length = string_length the_prog in
 
-  put_string ("max = " ^ sofi max ^ "\n");
+  let _no () = put_string ("prog_length = " ^ sofi prog_length ^ "\n") in
 
   let prog_at : int -> char =  (fun pc ->
-    string_index prog pc)
+    string_index the_prog pc)
   in
 
   let skip_left : int -> int = fun pc ->
@@ -178,8 +179,10 @@ let execute () =
       if ord c = 0 then next (1 + skip_right (pc+1)) mp else next (pc+1) mp
     in
     let exec_right_square () =
-      let c = tape_at mp in
-      if ord c = 0 then next (pc+1) mp else next (1 + skip_left (pc-1)) mp
+      (*let c = tape_at mp in*)
+      (*if ord c = 0 then next (pc+1) mp else next (1 + skip_left (pc-1)) mp*)
+      (*if ord c = 0 then next (pc+1) mp else next (skip_left (pc-1)) mp*)
+      next (skip_left (pc-1)) mp
     in
     let exec_dot () =
       let c = tape_at mp in
@@ -212,24 +215,40 @@ let execute () =
                       exec_skip op
     in
     (* TODO: move halt condition to caller; so no need to pass step *)
-    if pc = max then step else (* halt -- return #steps *)
+    if pc = prog_length then step else (* halt -- return #steps *)
       let op = prog_at pc in
       let () = _debug_step pc step mp op in
       exec_op op
   in
 
-  let _all_pcs = zero_upto max in
-  let selected_pcs = [0;3;8] in (* TODO: determine automatically *)
+  let program_points =
+    let [@unroll] rec loop acc n =
+      if n = 0 then 0::acc else
+        let c = prog_at n in
+        if eq_char c '[' then loop (n::acc) (n-1) else loop acc (n-1)
+    in
+    loop [] (prog_length-1)
+  in
+
+  let _no () = print_int_list "program_points=" program_points in
+  let _no () = put_string ("#program_points=" ^ sofi (length program_points) ^ "\n") in
+
+  let is_program_point sought =
+    let [@unroll] rec loop xs = match xs with
+      | [] -> false
+      | x::xs -> x = sought || loop xs
+    in
+    loop program_points
+  in
 
   let rec outer pc step mp =
     let _no () = put_char 'x' in
-    cases selected_pcs pc (fun pc ->
+    cases program_points pc (fun pc ->
         let [@unroll] rec inner pc step mp =
           let _no () = put_char '.' in
           let next pc' mp =
-            (*if not (is_comptime_known pc) then crash "?pc" else*)
-            let backedge = pc' < pc in
-            if backedge
+            (*let backedge = pc' < pc in*)
+            if is_program_point pc'
             then outer pc' (step+1) mp
             else inner pc' (step+1) mp
           in
@@ -244,14 +263,8 @@ let execute () =
 let execute = noinline execute
 
 let main() =
-  let () = put_string "mode:" in
-  let () = put_string the_mode in
-  let () = put_string "\n" in
-  let _no () = put_string "eval:" in
-  let () = put_string the_prog in
-  let () = put_string "\n" in
+  let () = put_string ("mode:" ^ the_mode ^ "\n") in
+  let _no () = put_string (the_prog ^ "\n") in
   let steps = execute () in
-  let () = put_string "#steps=" in
-  put_int steps;
-  let () = put_string "\n" in
+  let () = put_string ("#steps=" ^ sofi steps ^ "\n") in
   ()
