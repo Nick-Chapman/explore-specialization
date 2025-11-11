@@ -19,3 +19,4 @@ let prim_MakeBytes a = make_bytes a
 let prim_GetBytes (b,i) = get_bytes b i
 let prim_SetBytes (b,i,x) = set_bytes b i x
 let prim_Crash a = crash a
+let prim_FreezeBytes a = freeze_bytes a

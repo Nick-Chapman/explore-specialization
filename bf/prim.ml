@@ -77,7 +77,8 @@ end = struct
   let get_char () =
     let bytes = Bytes.create 1 in
     let n = Unix.read Unix.stdin bytes 0 1 in
-    if n < 1 then (Printf.printf "[EOF]\n"; exit 0) else
+    (*if n < 1 then (Printf.printf "[EOF]\n"; exit 0) else*)
+    if n < 1 then chr 0 else (* this is how EOF is indicated in BF *)
       Bytes.get bytes 0
 
   let put_char : char -> unit = fun c ->
