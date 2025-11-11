@@ -1,43 +1,30 @@
 
-number:
-  echo 123 > number
+input:
+  echo 123 > input
 
-test: number orig_example1.exe norm_example1.exe
+test: input orig_factor.exe norm_factor.exe
   touch test
-  cat number | ./orig_example1.exe | tee test
-  cat number | ./norm_example1.exe | tee test
+  cat input | ./orig_factor.exe | tee test
+  cat input | ./norm_factor.exe | tee test
 
-names:
-  echo orig_example1 >> names
-  echo norm_example1 >> names
+prog.list :
+  echo rev >> prog.list
+  echo triplicate >> prog.list
+  echo mes >> prog.list
+  echo collatz >> prog.list
+  echo factor >> prog.list
+  echo fib >> prog.list
+  #echo mandelbrot >> prog.list
 
-example1.bf : fac.b
-  #echo '[-]>,[>,]<[+.<]' > example1.bf
-  #cat ~/code/bf/b/rev.b > example1.bf
-  #cat ~/code/bf/b/mes.b > example1.bf
-  #cat ~/code/bf/b/collatz.b > example1.bf
-  cat fac.b > example1.bf
+bf.rules : prog.list bf-rules.sh
+  ./bf-rules.sh $(cat prog.list) > bf.rules
 
-orig_example1.ml : prim.ml example1.bf interpreter.fun
-  echo 'let the_mode = "ORIGINAL"' >> orig_example1.ml
-  cat prim.ml >> orig_example1.ml
-  echo 'let the_prog = "'$(cat example1.bf)'"' >> orig_example1.ml
-  cat interpreter.fun >> orig_example1.ml
-  echo 'let () = main()' >> orig_example1.ml
+include bf.rules
 
 
-norm_example1.ml : prim.ml shim.ml example1.fun
-  barefun.exe example1.fun -2 -compile -mapp 1 -mlam 1 -ppu > ~/norm.ml
-  cat prim.ml >> norm_example1.ml
-  cat shim.ml >> norm_example1.ml
-  echo 'let Unit =' >> norm_example1.ml
-  cat ~/norm.ml >> norm_example1.ml
-
-example1.fun : example1.bf interpreter.fun
-  echo 'let the_mode = "NORMALIZED"' >> example1.fun
-  echo 'let the_prog = "'$(cat example1.bf)'"' >> example1.fun
-  cat interpreter.fun >> example1.fun
-
+# ocaml module names
+names: prog.list
+  cat prog.list | sed 's|\(.*\)|orig_\1\nnorm_\1|' > names
 
 include ../peval/ocaml/ocaml.rules
 
