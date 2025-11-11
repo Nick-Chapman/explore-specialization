@@ -4,12 +4,15 @@ for name in "$@"; do
 
 cat << EOF
 
-orig_${name}.ml : prim.ml progs/${name}.bf interpreter.fun
+${name}.the_prog : progs/${name}.bf
+  echo -n 'let the_prog = "' >> ${name}.the_prog
+  cat ${name}.bf >> ${name}.the_prog
+  echo '"' >> ${name}.the_prog
+
+orig_${name}.ml : prim.ml ${name}.the_prog interpreter.fun
   echo 'let the_mode = "ORIGINAL"' >> orig_${name}.ml
   cat prim.ml >> orig_${name}.ml
-  echo -n 'let the_prog = "' >> orig_${name}.ml
-  cat ${name}.bf >> orig_${name}.ml
-  echo '"' >> orig_${name}.ml
+  cat ${name}.the_prog >> orig_${name}.ml
   cat interpreter.fun >> orig_${name}.ml
   echo 'let () = main()' >> orig_${name}.ml
 
@@ -20,11 +23,9 @@ norm_${name}.ml : prim.ml shim.ml ${name}.fun
   echo 'let Unit =' >> norm_${name}.ml
   cat ~/norm.ml >> norm_${name}.ml
 
-${name}.fun : progs/${name}.bf interpreter.fun
+${name}.fun : ${name}.the_prog interpreter.fun
   echo 'let the_mode = "NORMALIZED"' >> ${name}.fun
-  echo -n 'let the_prog = "' >> ${name}.fun
-  cat ${name}.bf >> ${name}.fun
-  echo '"' >> ${name}.fun
+  cat ${name}.the_prog >> ${name}.fun
   cat interpreter.fun >> ${name}.fun
 
 EOF
