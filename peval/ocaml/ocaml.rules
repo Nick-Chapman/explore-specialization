@@ -2,11 +2,20 @@
 rules: names
   cat names | sed 's|\(.*\)|\1.cmx \1.o : ocamlopt.sh \1.ml \1.cmi : ./ocamlopt.sh -c -impl \1.ml -o \1.cmx|' >>rules
   cat names | sed 's|\(.*\)|\1.cmi : ocamlopt.sh \1.mli : ./ocamlopt.sh -c -intf \1.mli -o \1.cmi|' >>rules
-  cat names | sed 's|\(.*\)|\1.exe: ocamlopt.sh \1.cmx \1.o : ./ocamlopt.sh \1.cmx -o \1.exe|' >>rules
+  cat names | sed 's|\(.*\)|\1.exe: ocamlopt-link.sh \1.cmx \1.o : ./ocamlopt-link.sh \1.cmx -o \1.exe|' >>rules
   cat names | sed 's|\(.*\)|\1.mli : : touch \1.mli|' >>rules
 
 include rules
 
 ocamlopt.sh: ocaml.flags
-  echo /home/nic/.opam/5.1.1/bin/ocamlopt.opt $(cat ocaml.flags) '"$@"' > ocamlopt.sh
+  echo /home/nic/.opam/5.1.1/bin/ocamlopt.opt $(cat ocaml.flags) '"$@"' >> ocamlopt.sh
   chmod +x ocamlopt.sh
+
+
+packages:
+  touch packages
+  echo /home/nic/.opam/5.1.1/lib/ocaml/unix/unix.cmxa >> packages
+
+ocamlopt-link.sh: ocaml.flags packages
+  echo /home/nic/.opam/5.1.1/bin/ocamlopt.opt $(cat ocaml.flags) $(cat packages) '"$@"' >> ocamlopt-link.sh
+  chmod +x ocamlopt-link.sh
