@@ -2,10 +2,10 @@
 input:
   echo 123 > input
 
-test: input orig_factor.exe norm_factor.exe
-  touch test
-  cat input | ./orig_factor.exe | tee test
-  cat input | ./norm_factor.exe | tee test
+#test: input orig_factor.exe norm_factor.exe
+#  touch test
+#  cat input | ./orig_factor.exe | tee test
+#  cat input | ./norm_factor.exe | tee test
 
 prog.list :
   echo rev >> prog.list

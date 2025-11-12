@@ -19,9 +19,11 @@
 #barefun.exe : /home/nic/code/barefun/barefun.exe
 #  # no link as the names already match
 
+
 # Recursive jenga invocation... works... but, we dont see changes in jenga-w
+# doing recursive build quietly; (bit confusing if the same files are build non-recursively)
 barefun.exe : /home/nic/code/barefun/barefun.exe @barefun.files
-  (cd /home/nic/code/barefun; jenga build -a)
+  (cd /home/nic/code/barefun; jenga build -q)
 
 barefun.files : # TODO: be sensitive to new files
   echo -n 'barefun.exe : ' >>barefun.files
