@@ -1,5 +1,5 @@
 
-Compute stream of fib numbers; dont know where this program comes from.
+Compute stream of fib numbers; dont know where this program comes from
 
 >++++++++++>+>+[
     [+++++[>++++++++<-]>.<++++++[>--------<-]+<<<]>.>>[
