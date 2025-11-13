@@ -16,6 +16,8 @@ prog.list :
   echo fib >> prog.list
   #echo mandelbrot >> prog.list
 
+barefun.exe : /home/nic/code/barefun/barefun.exe
+
 bf.rules : prog.list bf-rules.sh
   ./bf-rules.sh $(cat prog.list) > bf.rules
 

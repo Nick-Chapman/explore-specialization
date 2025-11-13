@@ -1,34 +1,5 @@
 
-# this version only works when "jenga build" is run from dir above...
-#barefun.exe : ../../../barefun/haskell/src/barefun
-#  ln barefun barefun.exe
-
-# really want this; but tilda expansion not yet supported...
-#barefun.exe : ~/code/barefun/haskell/src/barefun
-#  ln barefun barefun.exe
-
-# .. but even so, absolute paths do not work right! even when build is run from dir above :(
-#barefun.exe : /home/nic/code/barefun/haskell/src/barefun
-# ln barefun barefun.exe
-
-# one solution os to clone the barefun repo within this repo...
-#barefun.exe : ../../barefun/haskell/src/barefun
-#  ln barefun barefun.exe
-
-# Expect barefun.exe to be materialized in the barefun repo. Works. But no rebuilds.
-#barefun.exe : /home/nic/code/barefun/barefun.exe
-#  # no link as the names already match
-
-
-# Recursive jenga invocation... works... but, we dont see changes in jenga-w
-# doing recursive build quietly; (bit confusing if the same files are build non-recursively)
-barefun.exe : /home/nic/code/barefun/barefun.exe @barefun.files
-  (cd /home/nic/code/barefun; jenga build -q)
-
-barefun.files : # TODO: be sensitive to new files
-  echo -n 'barefun.exe : ' >>barefun.files
-  echo $(ls ~/code/barefun/haskell/src/*.hs) >>barefun.files
-
+barefun.exe : /home/nic/code/barefun/barefun.exe
 
 norm.fun : barefun.exe orig.fun
   barefun.exe orig.fun -compile -2 > norm.fun
