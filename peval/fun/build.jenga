@@ -39,12 +39,11 @@ orig.ml : prim.ml start1.ml orig.fun end1.ml
 norm.ml : prim.ml start2.ml norm.fun end2.ml
   cat prim.ml start2.ml norm.fun end2.ml > norm.ml
 
-names:
-  echo orig >> names
-  echo norm >> names
+ocaml.modules:
+  echo orig >> ocaml.modules
+  echo norm >> ocaml.modules
 
-include ../ocaml/ocaml.rules
+include /home/nic/code/jenga/rulelib/ocaml.rules
 
-ocaml.flags:
-  echo '-w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -no-alias-deps -opaque -bin-annot -intf-suffix .ml' > ocaml.flags
-  echo '-w -27-37-32-34-26' >> ocaml.flags
+ocaml.xflags:
+  echo '-w -27-37-32-34-26' > ocaml.xflags

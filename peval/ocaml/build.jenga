@@ -2,10 +2,7 @@
 ml.files : all.files
   egrep '^[^#]+.ml$' all.files > ml.files
 
-names : ml.files
-  cat ml.files | sed 's|\(.*\).ml$|\1|' > names
+ocaml.modules : ml.files
+  cat ml.files | sed 's|\(.*\).ml$|\1|' > ocaml.modules
 
-include ocaml.rules
-
-ocaml.flags:
-  echo '-w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -no-alias-deps -opaque -bin-annot -intf-suffix .ml' > ocaml.flags
+include /home/nic/code/jenga/rulelib/ocaml.rules
