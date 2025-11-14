@@ -2,19 +2,19 @@
 barefun.exe : /home/nic/code/barefun/barefun.exe
 
 norm.fun : barefun.exe orig.fun
-  barefun.exe orig.fun -compile -2 > norm.fun
+  barefun.exe orig.fun -compile -2 > $@
 
 orig.ml : prim.ml start1.ml orig.fun end1.ml
-  cat prim.ml start1.ml orig.fun end1.ml > orig.ml
+  cat prim.ml start1.ml orig.fun end1.ml > $@
 
 norm.ml : prim.ml start2.ml norm.fun end2.ml
-  cat prim.ml start2.ml norm.fun end2.ml > norm.ml
+  cat prim.ml start2.ml norm.fun end2.ml > $@
 
 ocaml.modules:
-  echo orig >> ocaml.modules
-  echo norm >> ocaml.modules
+  echo orig >> $@
+  echo norm >> $@
 
 include /home/nic/code/jenga/rulelib/ocaml.rules
 
 ocaml.xflags:
-  echo '-w -27-37-32-34-26' > ocaml.xflags
+  echo '-w -27-37-32-34-26' > $@

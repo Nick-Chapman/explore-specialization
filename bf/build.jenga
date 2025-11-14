@@ -1,6 +1,6 @@
 
 input:
-  echo 123 > input
+  echo 123 >$@
 
 #test: input orig_factor.exe norm_factor.exe
 #  touch test
@@ -8,25 +8,25 @@ input:
 #  cat input | ./norm_factor.exe | tee test
 
 prog.list :
-  echo rev >> prog.list
-  echo triplicate >> prog.list
-  echo mes >> prog.list
-  echo collatz >> prog.list
-  echo factor >> prog.list
-  echo fib >> prog.list
-  #echo mandelbrot >> prog.list
+  echo rev >> $@
+  echo triplicate >> $@
+  echo mes >> $@
+  echo collatz >> $@
+  echo factor >> $@
+  echo fib >> $@
+  #echo mandelbrot >> $@
 
 barefun.exe : /home/nic/code/barefun/barefun.exe
 
 bf.rules : prog.list bf-rules.sh
-  ./bf-rules.sh $(cat prog.list) > bf.rules
+  ./bf-rules.sh $(cat prog.list) > $@
 
 include bf.rules
 
 ocaml.modules: prog.list
-  cat prog.list | sed 's|\(.*\)|orig_\1\nnorm_\1|' > ocaml.modules
+  cat prog.list | sed 's|\(.*\)|orig_\1\nnorm_\1|' > $@
 
 include /home/nic/code/jenga/rulelib/ocaml.rules
 
 ocaml.xflags:
-  echo '-I +unix -w -32' > ocaml.xflags
+  echo '-I +unix -w -32' > $@
