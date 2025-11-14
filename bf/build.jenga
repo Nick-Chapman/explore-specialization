@@ -2,18 +2,18 @@
 input:
   echo 123 >$@
 
-test: input orig_mes.exe norm_mes.exe
+test: input orig_factor.exe norm_factor.exe
   touch test
-  cat input | ./orig_mes.exe | tee test
-  cat input | ./norm_mes.exe | tee test
+  cat input | ./orig_factor.exe
+  cat input | ./norm_factor.exe
 
 prog.list :
   echo rev >> $@
   echo triplicate >> $@
   echo mes >> $@
-  #echo collatz >> $@
-  #echo factor >> $@
-  #echo fib >> $@
+  echo collatz >> $@
+  echo factor >> $@
+  echo fib >> $@
   #echo mandelbrot >> $@
 
 barefun.exe : /home/nic/code/barefun/barefun.exe

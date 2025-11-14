@@ -17,7 +17,7 @@ orig_${name}.ml : prim.ml ${name}.the_prog interpreter.fun
   echo 'let () = main()' >> \$@
 
 norm_${name}.ml : barefun.exe prim.ml shim.ml ${name}.fun
-  ./barefun.exe ${name}.fun -2 -compile -mapp 1 -mlam 1 -ppu > ~/norm.ml
+  ./barefun.exe ${name}.fun -2 -compile -mapp 1 -mlam 1 > ~/norm.ml
   cat prim.ml >> \$@
   cat shim.ml >> \$@
   echo 'let Unit =' >> \$@
