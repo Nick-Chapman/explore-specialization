@@ -2,7 +2,7 @@
 barefun.exe : /home/nic/code/barefun/barefun.exe
 
 norm.fun : barefun.exe orig.fun
-  barefun.exe orig.fun -compile -2 > $@
+  ./barefun.exe orig.fun -compile -2 > $@
 
 orig.ml : prim.ml start1.ml orig.fun end1.ml
   cat prim.ml start1.ml orig.fun end1.ml > $@
