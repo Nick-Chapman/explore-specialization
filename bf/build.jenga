@@ -16,7 +16,7 @@ prog.list :
   echo fib >> $@
   #echo mandelbrot >> $@
 
-barefun.exe : /home/nic/code/barefun/barefun.exe
+barefun.exe : ~/code/barefun/barefun.exe
 
 bf.rules : prog.list bf-rules.sh
   ./bf-rules.sh $(cat prog.list) > $@
@@ -26,7 +26,7 @@ include bf.rules
 ocaml.modules: prog.list
   cat prog.list | sed 's|\(.*\)|orig_\1\nnorm_\1|' > $@
 
-include /home/nic/code/jenga/rulelib/ocaml.rules
+include ~/code/jenga/rulelib/ocaml.rules
 
 ocaml.xflags:
   echo '-I +unix -w -32' > $@

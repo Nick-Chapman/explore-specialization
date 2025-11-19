@@ -1,5 +1,5 @@
 
-barefun.exe : /home/nic/code/barefun/barefun.exe
+barefun.exe : ~/code/barefun/barefun.exe
 
 norm.fun : barefun.exe orig.fun
   ./barefun.exe orig.fun -compile -2 > $@
@@ -14,7 +14,7 @@ ocaml.modules:
   echo orig >> $@
   echo norm >> $@
 
-include /home/nic/code/jenga/rulelib/ocaml.rules
+include ~/code/jenga/rulelib/ocaml.rules
 
 ocaml.xflags:
   echo '-w -27-37-32-34-26' > $@

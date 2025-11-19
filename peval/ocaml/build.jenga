@@ -5,4 +5,4 @@ ml.files : all.files
 ocaml.modules : ml.files
   cat ml.files | sed 's|\(.*\).ml$|\1|' > ocaml.modules
 
-include /home/nic/code/jenga/rulelib/ocaml.rules
+include ~/code/jenga/rulelib/ocaml.rules
