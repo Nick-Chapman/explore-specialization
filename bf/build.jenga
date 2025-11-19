@@ -2,8 +2,7 @@
 input:
   echo 123 >$@
 
-test: input orig_factor.exe norm_factor.exe
-  touch test
+*play: input orig_factor.exe norm_factor.exe
   cat input | ./orig_factor.exe
   cat input | ./norm_factor.exe
 
