@@ -14,7 +14,7 @@ ocaml.modules:
   echo orig >> $@
   echo norm >> $@
 
-include ~/code/jenga/rulelib/ocaml.rules
+include ~/code/jenga/rulelib/ocaml.jenga
 
 ocaml.xflags:
   echo '-w -27-37-32-34-26' > $@

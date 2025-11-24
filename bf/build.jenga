@@ -25,7 +25,7 @@ include bf.rules
 ocaml.modules: prog.list
   cat prog.list | sed 's|\(.*\)|orig_\1\nnorm_\1|' > $@
 
-include ~/code/jenga/rulelib/ocaml.rules
+include ~/code/jenga/rulelib/ocaml.jenga
 
 ocaml.xflags:
   echo '-I +unix -w -32' > $@
