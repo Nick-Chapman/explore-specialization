@@ -1,8 +1,11 @@
 
+*run: v2.exe
+ ./$<
+
 ml.files : all.files
-  egrep '^[^#]+.ml$' all.files > ml.files
+  egrep '^[^#]+.ml$' $< > $@
 
 ocaml.modules : ml.files
-  cat ml.files | sed 's|\(.*\).ml$|\1|' > ocaml.modules
+  cat $< | sed 's|\(.*\).ml$|\1|' > $@
 
 include ~/code/jenga/rulelib/ocaml.jenga

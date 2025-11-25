@@ -1,6 +1,6 @@
 
 input:
-  echo 123 >$@
+  echo 123 > $@
 
 *play: input orig_factor.exe norm_factor.exe
   cat input | ./orig_factor.exe
@@ -17,13 +17,13 @@ prog.list :
 
 barefun.exe : ~/code/barefun/barefun.exe
 
-bf.rules : prog.list bf-rules.sh
+bf.rules : bf-rules.sh prog.list
   ./bf-rules.sh $(cat prog.list) > $@
 
 include bf.rules
 
 ocaml.modules: prog.list
-  cat prog.list | sed 's|\(.*\)|orig_\1\nnorm_\1|' > $@
+  cat $< | sed 's|\(.*\)|orig_\1\nnorm_\1|' > $@
 
 include ~/code/jenga/rulelib/ocaml.jenga
 

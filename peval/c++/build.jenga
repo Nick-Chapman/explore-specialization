@@ -1,9 +1,9 @@
 
-#time.out: peval
-#  bash -c 'time ./peval' | tee time.out
+*run: peval.exe
+  bash -c 'time ./$<'
 
 peval.exe: peval.o
-  g++ peval.o -o peval.exe
+  g++ $< -o $@
 
 peval.o: peval.cc
-  g++ -O2 -c peval.cc -o peval.o
+  g++ -O2 -c $< -o $@

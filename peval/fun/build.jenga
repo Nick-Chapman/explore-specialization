@@ -2,13 +2,13 @@
 barefun.exe : ~/code/barefun/barefun.exe
 
 norm.fun : barefun.exe orig.fun
-  ./barefun.exe orig.fun -compile -2 > $@
+  ./$^ -compile -2 > $@
 
 orig.ml : prim.ml start1.ml orig.fun end1.ml
-  cat prim.ml start1.ml orig.fun end1.ml > $@
+  cat $^ > $@
 
 norm.ml : prim.ml start2.ml norm.fun end2.ml
-  cat prim.ml start2.ml norm.fun end2.ml > $@
+  cat $^ > $@
 
 ocaml.modules:
   echo orig >> $@
@@ -18,3 +18,12 @@ include ~/code/jenga/rulelib/ocaml.jenga
 
 ocaml.xflags:
   echo '-w -27-37-32-34-26' > $@
+
+orig.out: orig.exe : ./$< > $@
+norm.out: norm.exe : ./$< > $@
+
+expect.names :
+  echo orig.out >> $@
+  echo norm.out >> $@
+
+include ~/code/jenga/rulelib/expect.jenga
