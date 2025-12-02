@@ -2,6 +2,8 @@
 *run: v2.exe
  ./$<
 
+all.files : : echo '$glob' > $@
+
 ml.files : all.files
   egrep '^[^#]+.ml$' $< > $@
 
