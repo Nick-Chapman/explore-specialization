@@ -5,9 +5,9 @@
 all.files : : echo '$glob' > $@
 
 ml.files : all.files
-  egrep '^[^#]+.ml$' $< > $@
+  egrep '^[^#]+.ml$$' $< > $@
 
 ocaml.modules : ml.files
-  cat $< | sed 's|\(.*\).ml$|\1|' > $@
+  cat $< | sed 's|\(.*\).ml$$|\1|' > $@
 
 include ~/code/jenga/rulelib/ocaml.jenga

@@ -18,7 +18,7 @@ prog.list :
 barefun.exe : ~/code/barefun/barefun.exe
 
 bf.rules : bf-rules.sh prog.list
-  ./bf-rules.sh $(cat prog.list) > $@
+  ./bf-rules.sh $$(cat prog.list) > $@
 
 include bf.rules
 
